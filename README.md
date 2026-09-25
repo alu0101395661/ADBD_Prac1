@@ -29,17 +29,25 @@ INSERT INTO autores(id_autor, nombre, nacionalidad) VALUES (4, 'Isabel Allende',
 INSERT INTO autores(id_autor, nombre, nacionalidad) VALUES (5, 'Terry Pratchet', 'Reino Unido');
 
 INSERT INTO libros (id_libro, titulo, anyo_publicacion, id_autor) VALUES (1, ‘Cien años de soledad’, 1967, 2);
+
 INSERT INTO libros (id_libro, titulo, anyo_publicacion, id_autor) VALUES (2, ‘Don Quijote de la Mancha’, 1605, 1);
+
 INSERT INTO libros (id_libro, titulo, anyo_publicacion, id_autor) VALUES (3, ‘Frankenstein’, 1818, 3);
+
 INSERT INTO libros (id_libro, titulo, anyo_publicacion, id_autor) VALUES (4, ‘La casa de los espíritus’, 1982, 4);
 INSERT INTO libros (id_libro, titulo, anyo_publicacion, id_autor) VALUES (5, ‘Guardias, Guardias’, 1989, 5);
 INSERT INTO libros (id_libro, titulo, anyo_publicacion, id_autor) VALUES (6, ‘Mort’, 1987, 5);
 INSERT INTO libros (id_libro, titulo, anyo_publicacion, id_autor) VALUES (7, ‘El Segador’, 1991, 5);
 INSERT INTO libros (id_libro, titulo, anyo_publicacion, id_autor) VALUES (8, ‘De Amor y de Sombra’, 1984, 4);
 
-INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 1, 6, ‘2026-02-14’, ‘2026-05-17’, Carla)
-INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 2, 4, ‘2026-02-17’, ‘2026-04-01’, Pablo)
-INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 3, 5, ‘2026-03-23’, ‘2026-04-03’, Yurena)
-INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 4, 1, ‘2026-03-29’, Jesus)
-INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 5, 3, ‘2026-05-23’, ‘2026-06-25’, Irene)
-INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 6, 8, ‘2026-06-23’, Lara)
+INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 1, 6, ‘2026-02-14’, ‘2026-05-17’, Carla);
+
+INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 2, 4, ‘2026-02-17’, ‘2026-04-01’, Pablo);
+
+INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 3, 5, ‘2026-03-23’, ‘2026-04-03’, Yurena);
+
+INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 4, 1, ‘2026-03-29’, Jesus);
+
+INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 5, 3, ‘2026-05-23’, ‘2026-06-25’, Irene);
+
+INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 6, 8, ‘2026-06-23’, Lara);
