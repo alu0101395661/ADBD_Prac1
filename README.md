@@ -146,8 +146,14 @@ GRANT SELECT ON vista_libros_prestados TO usuario_biblio;
 ## 9.2 Crear una consulta que devuelva los tres libros más prestados. 
 SELECT l.titulo, COUNT(p.id_prestamo) AS total_prestamos FROM libros l JOIN prestamos p ON l.id_libro = p_id_libro GROUP BY l.id_libro, l.titulo ORDER BY total_prestamos DESC LIMIT 3;
 
+          titulo          | total_prestamos
+--------------------------+-----------------
+ Don Quijote de la Mancha |               3
+ La casa de los espíritus |               3
+ Mort                     |               2
+
 ## 10.1 Exportar el contenido de la tabla libros a un archivo CSV. 
-COPY libros TO '/ruta/servidor/libros.csv' WITH (FORMAT csv, HEADER true, DELIMITER ',');
+COPY libros TO '/tmp/libros.csv' WITH (FORMAT csv, HEADER true, DELIMITER ',');
 
 ## 10.2 Importar datos adicionales de autores desde un archivo CSV externo. 
 \copy autores(nombre, nacionalidad) FROM '/ruta/al/archivo/autores_nuevos.csv' WITH (FORMAT csv, HEADER true, DELIMITER ',');
