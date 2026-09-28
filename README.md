@@ -73,52 +73,52 @@ INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, u
 ## 5.1 Listar todos los libros con sus autores correspondientes
 SELECT libros.titulo, libros.anyo_publicacion, autores.nombre AS autor FROM libros JOIN autores ON libros.id_autor = autores.id_autor;
 
-          titulo          | anyo_publicacion |         autor
---------------------------+------------------+------------------------
- Cien anyos de soledad    |             1967 | Gabriel García Marquez
- Don Quijote de la Mancha |             1605 | Miguel de Cervantes
- Frankenstein             |             1818 | Mary Shelley
- La casa de los espíritus |             1982 | Isabel Allende
- Guardias, Guardias       |             1989 | Terry Pratchet
- Mort                     |             1987 | Terry Pratchet
- El Segador               |             1991 | Terry Pratchet
- De Amor y de Sombra      |             1984 | Isabel Allende
+| Título | Año de publicación | Autor |
+| :--- | :---: | :--- |
+| Cien años de soledad | 1967 | Gabriel García Márquez |
+| Don Quijote de la Mancha | 1605 | Miguel de Cervantes |
+| Frankenstein | 1818 | Mary Shelley |
+| La casa de los espíritus | 1982 | Isabel Allende |
+| Guardias, Guardias | 1989 | Terry Pratchett |
+| Mort | 1987 | Terry Pratchett |
+| El Segador | 1991 | Terry Pratchett |
+| De amor y de sombra | 1984 | Isabel Allende |
 
 ## 5.2 Autores con más de un libro registrado
 SELECT autores.nombre FROM autores JOIN libros ON autores.id_autor = libros.id_autor GROUP BY autores.nombre HAVING COUNT(*) > 1;
 
      nombre
-----------------
- Isabel Allende
- Terry Pratchet
+| Nombre |
+| :--- |
+| Isabel Allende |
+| Terry Pratchett |
 (2 rows)
 
 ## 5.3 Mostrar los Préstamos que aún no tienen fecha de devolución
 SELECT * FROM prestamos WHERE fecha_devolucion IS NULL;
 
- id_prestamo | id_libro | fecha_prestamo | fecha_devolucion | usuario_prestatario
--------------+----------+----------------+------------------+---------------------
-           4 |        1 | 2026-03-29     |                  | Jesus
-           6 |        8 | 2026-06-23     |                  | Lara
+| ID Préstamo | ID Libro | Fecha Préstamo | Fecha Devolución | Usuario Prestatario |
+| :---: | :---: | :---: | :---: | :--- |
+| 4 | 1 | 2026-03-29 | | Jesús |
+| 6 | 8 | 2026-06-23 | | Lara |
 
 ## 6.1 Calcular el número total de préstamos realizados
 SELECT COUNT(*) AS total_prestamos FROM prestamos;
-
- total_prestamos
------------------
-               6
+| Total Préstamos |
+| :---: |
+| 6 |
 
 ## 6.2 Obtener el número de libros prestados por cada usuario
 SELECT usuario_prestatario, COUNT(*) AS libros_prestados FROM prestamos GROUP BY usuario_prestatario;
 
- usuario_prestatario | libros_prestados
----------------------+------------------
- Carla               |                1
- Lara                |                1
- Jesus               |                1
- Irene               |                1
- Pablo               |                1
- Yurena              |                1
+| Usuario Prestatario | Libros Prestados |
+| :--- | :---: |
+| Carla | 1 |
+| Lara | 1 |
+| Jesús | 1 |
+| Irene | 1 |
+| Pablo | 1 |
+| Yurena | 1 |
 
 ## 7.1 Actualizar la fecha de devolución de un préstamo pendiente.
 UPDATE prestamos SET fecha_devolucion = CURRENT_DATE WHERE id_prestamo = 1 AND fecha_devolucion IS NULL;
@@ -146,11 +146,11 @@ GRANT SELECT ON vista_libros_prestados TO usuario_biblio;
 ## 9.2 Crear una consulta que devuelva los tres libros más prestados. 
 SELECT l.titulo, COUNT(p.id_prestamo) AS total_prestamos FROM libros l JOIN prestamos p ON l.id_libro = p_id_libro GROUP BY l.id_libro, l.titulo ORDER BY total_prestamos DESC LIMIT 3;
 
-          titulo          | total_prestamos
---------------------------+-----------------
- Don Quijote de la Mancha |               3
- La casa de los espíritus |               3
- Mort                     |               2
+| Título | Total Préstamos |
+| :--- | :---: |
+| Don Quijote de la Mancha | 3 |
+| La casa de los espíritus | 3 |
+| Mort | 2 |
 
 ## 10.1 Exportar el contenido de la tabla libros a un archivo CSV. 
 COPY libros TO '/tmp/libros.csv' WITH (FORMAT csv, HEADER true, DELIMITER ',');
