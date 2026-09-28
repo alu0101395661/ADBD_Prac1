@@ -71,19 +71,54 @@ INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, u
 INSERT INTO prestamos(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion, usuario_prestatario) VALUES( 6, 8, ‘2026-06-23’, Lara);
 
 ## 5.1 Listar todos los libros con sus autores correspondientes
-SELECT libros.titulo, libro.anyo_publicacion, autores.nombre AS autor FROM libros JOIN autores ON libros.id_autor = autores.id_autor;
+SELECT libros.titulo, libros.anyo_publicacion, autores.nombre AS autor FROM libros JOIN autores ON libros.id_autor = autores.id_autor;
+
+          titulo          | anyo_publicacion |         autor
+--------------------------+------------------+------------------------
+ Cien anyos de soledad    |             1967 | Gabriel García Marquez
+ Don Quijote de la Mancha |             1605 | Miguel de Cervantes
+ Frankenstein             |             1818 | Mary Shelley
+ La casa de los espíritus |             1982 | Isabel Allende
+ Guardias, Guardias       |             1989 | Terry Pratchet
+ Mort                     |             1987 | Terry Pratchet
+ El Segador               |             1991 | Terry Pratchet
+ De Amor y de Sombra      |             1984 | Isabel Allende
 
 ## 5.2 Autores con más de un libro registrado
 SELECT autores.nombre FROM autores JOIN libros ON autores.id_autor = libros.id_autor GROUP BY autores.nombre HAVING COUNT(*) > 1;
 
+     nombre
+----------------
+ Isabel Allende
+ Terry Pratchet
+(2 rows)
+
 ## 5.3 Mostrar los Préstamos que aún no tienen fecha de devolución
 SELECT * FROM prestamos WHERE fecha_devolucion IS NULL;
+
+ id_prestamo | id_libro | fecha_prestamo | fecha_devolucion | usuario_prestatario
+-------------+----------+----------------+------------------+---------------------
+           4 |        1 | 2026-03-29     |                  | Jesus
+           6 |        8 | 2026-06-23     |                  | Lara
 
 ## 6.1 Calcular el número total de préstamos realizados
 SELECT COUNT(*) AS total_prestamos FROM prestamos;
 
+ total_prestamos
+-----------------
+               6
+
 ## 6.2 Obtener el número de libros prestados por cada usuario
 SELECT usuario_prestatario, COUNT(*) AS libros_prestados FROM prestamos GROUP BY usuario_prestatario;
+
+ usuario_prestatario | libros_prestados
+---------------------+------------------
+ Carla               |                1
+ Lara                |                1
+ Jesus               |                1
+ Irene               |                1
+ Pablo               |                1
+ Yurena              |                1
 
 ## 7.1 Actualizar la fecha de devolución de un préstamo pendiente.
 UPDATE prestamos SET fecha_devolucion = CURRENT_DATE WHERE id_prestamo = 1 AND fecha_devolucion IS NULL;
@@ -91,7 +126,17 @@ UPDATE prestamos SET fecha_devolucion = CURRENT_DATE WHERE id_prestamo = 1 AND f
 ## 7.2 Eliminar un libro y comprobar el efecto en la tabla de préstamos (usar ON DELETE CASCADE o justificar el comportamiento)
 
 ## 8.1 Crear una vista llamada vista_libros_prestados que muestre: título del libro, autor y nombre del prestatario
-CREATE VIEW visita_libros_prestados AS SELECT l-titulo, a.nombre AS autor, p-usuario_prestatario AS prestatario FROM prestamos p JOIN libros l ON p.id_libro = l.id_libro JOIN autores a ON l.id_autor = a.id_autor;
+CREATE VIEW vista_libros_prestados AS SELECT l.titulo, a.nombre AS autor, p-usuario_prestatario AS prestatario FROM prestamos p JOIN libros l ON p.id_libro = l.id_libro JOIN autores a ON l.id_autor = a.id_autor;
+
+          titulo          |         autor          | prestatario
+--------------------------+------------------------+-------------
+ Mort                     | Terry Pratchet         | Carla
+ La casa de los espíritus | Isabel Allende         | Pablo
+ Guardias, Guardias       | Terry Pratchet         | Yurena
+ Frankenstein             | Mary Shelley           | Irene
+ Cien anyos de soledad    | Gabriel García Marquez | Jesus
+ De Amor y de Sombra      | Isabel Allende         | Lara
+ Mort                     | Terry Pratchet         | Carla
 
 ## 8.2 Conceder permisos de consulta sobre esta vista únicamente a usuario_biblio. 
 GRANT SELECT ON vista_libros_prestados TO usuario_biblio;
