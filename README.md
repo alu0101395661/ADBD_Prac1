@@ -128,15 +128,15 @@ UPDATE prestamos SET fecha_devolucion = CURRENT_DATE WHERE id_prestamo = 1 AND f
 ## 8.1 Crear una vista llamada vista_libros_prestados que muestre: título del libro, autor y nombre del prestatario
 CREATE VIEW vista_libros_prestados AS SELECT l.titulo, a.nombre AS autor, p-usuario_prestatario AS prestatario FROM prestamos p JOIN libros l ON p.id_libro = l.id_libro JOIN autores a ON l.id_autor = a.id_autor;
 
-          titulo          |         autor          | prestatario
---------------------------+------------------------+-------------
- Mort                     | Terry Pratchet         | Carla
- La casa de los espíritus | Isabel Allende         | Pablo
- Guardias, Guardias       | Terry Pratchet         | Yurena
- Frankenstein             | Mary Shelley           | Irene
- Cien anyos de soledad    | Gabriel García Marquez | Jesus
- De Amor y de Sombra      | Isabel Allende         | Lara
- Mort                     | Terry Pratchet         | Carla
+| Título | Autor | Prestatario |
+| :--- | :--- | :--- |
+| Mort | Terry Pratchett | Carla |
+| La casa de los espíritus | Isabel Allende | Pablo |
+| Guardias, Guardias | Terry Pratchett | Yurena |
+| Frankenstein | Mary Shelley | Irene |
+| Cien años de soledad | Gabriel García Márquez | Jesús |
+| De amor y de sombra | Isabel Allende | Lara |
+| Mort | Terry Pratchett | Carla |
 
 ## 8.2 Conceder permisos de consulta sobre esta vista únicamente a usuario_biblio. 
 GRANT SELECT ON vista_libros_prestados TO usuario_biblio;
@@ -156,4 +156,4 @@ SELECT l.titulo, COUNT(p.id_prestamo) AS total_prestamos FROM libros l JOIN pres
 COPY libros TO '/tmp/libros.csv' WITH (FORMAT csv, HEADER true, DELIMITER ',');
 
 ## 10.2 Importar datos adicionales de autores desde un archivo CSV externo. 
-\copy autores(nombre, nacionalidad) FROM '/ruta/al/archivo/autores_nuevos.csv' WITH (FORMAT csv, HEADER true, DELIMITER ',');
+COPY autores(nombre, nacionalidad) FROM '/tmp/autores_nuevos.csv' WITH (FORMAT csv, HEADER true, DELIMITER ',');
