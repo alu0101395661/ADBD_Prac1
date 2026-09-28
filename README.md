@@ -87,7 +87,6 @@ SELECT libros.titulo, libros.anyo_publicacion, autores.nombre AS autor FROM libr
 ## 5.2 Autores con más de un libro registrado
 SELECT autores.nombre FROM autores JOIN libros ON autores.id_autor = libros.id_autor GROUP BY autores.nombre HAVING COUNT(*) > 1;
 
-     nombre
 | Nombre |
 | :--- |
 | Isabel Allende |
@@ -142,6 +141,30 @@ CREATE VIEW vista_libros_prestados AS SELECT l.titulo, a.nombre AS autor, p-usua
 GRANT SELECT ON vista_libros_prestados TO usuario_biblio;
 
 ## 9.1 Crear una función que reciba el nombre de un autor y devuelva todos los libros escritos por él. 
+CREATE OR REPLACE FUNCTION libros_por_autor(p_nombre_autor TEXT)
+RETURNS TABLE (
+     id_libro INT,
+     titulo TEXT,
+     anyo_publicacion INT
+)
+LANGUAGE sql
+AS $$
+   SELECT 
+        l.id_libro,
+        l.titulo,
+        l.anyo_publicacion
+   FROM libros l
+   JOIN autores a ON l.id_autor = a.id_autor
+   WHERE a.nombre ILIKE '%' || p_nombre_autor || '%';
+$$;
+
+SELECT * FROM libros_por_autor('Terry Pratchet');
+
+| id_libro | Título | anyo_publicacion |
+| :--- | :--- | :---: | 
+| 5 | Guardias, Guardias | 1989 |
+| 6 | Mort | 1987 |
+| 7 | El Segador | 1991 |
 
 ## 9.2 Crear una consulta que devuelva los tres libros más prestados. 
 SELECT l.titulo, COUNT(p.id_prestamo) AS total_prestamos FROM libros l JOIN prestamos p ON l.id_libro = p_id_libro GROUP BY l.id_libro, l.titulo ORDER BY total_prestamos DESC LIMIT 3;
