@@ -124,6 +124,11 @@ UPDATE prestamos SET fecha_devolucion = CURRENT_DATE WHERE id_prestamo = 1 AND f
 
 ## 7.2 Eliminar un libro y comprobar el efecto en la tabla de préstamos (usar ON DELETE CASCADE o justificar el comportamiento)
 
+ALTER TABLE prestamos
+ADD CONSTRAINT prestamos_id_libro_fkey
+FOREIGN KEY (id_libro) REFERENCES libros(id_libro)
+ON DELETE CASCADE;
+
 ## 8.1 Crear una vista llamada vista_libros_prestados que muestre: título del libro, autor y nombre del prestatario
 CREATE VIEW vista_libros_prestados AS SELECT l.titulo, a.nombre AS autor, p-usuario_prestatario AS prestatario FROM prestamos p JOIN libros l ON p.id_libro = l.id_libro JOIN autores a ON l.id_autor = a.id_autor;
 
