@@ -1,4 +1,4 @@
-# ADBD_Prac1: Conceptos fundamentales de PostgreSQL
+ # ADBD_Prac1: Conceptos fundamentales de PostgreSQL
 
 ## 1. Creación de la base de datos
 CREATE DATABASE biblioteca;
@@ -91,7 +91,7 @@ SELECT autores.nombre FROM autores JOIN libros ON autores.id_autor = libros.id_a
 | :--- |
 | Isabel Allende |
 | Terry Pratchett |
-(2 rows)
+
 
 ## 5.3 Mostrar los Préstamos que aún no tienen fecha de devolución
 SELECT * FROM prestamos WHERE fecha_devolucion IS NULL;
@@ -124,8 +124,15 @@ UPDATE prestamos SET fecha_devolucion = CURRENT_DATE WHERE id_prestamo = 1 AND f
 
 ## 7.2 Eliminar un libro y comprobar el efecto en la tabla de préstamos (usar ON DELETE CASCADE o justificar el comportamiento)
 
+Cambiamos la foreign key que vinculaba la id de los libros en la tabla de los prestamos y de los libros.
+
 ALTER TABLE prestamos
-ADD CONSTRAINT prestamos_id_libro_fkey
+DROP CONSTRAINT fk_libro;
+
+Luego la creamos de nuevo pero con DELETE CASCADE para que repercuta la eliminación de un libro en los prestamos.
+
+ALTER TABLE prestamos
+ADD CONSTRAINT fk_libro
 FOREIGN KEY (id_libro) REFERENCES libros(id_libro)
 ON DELETE CASCADE;
 
